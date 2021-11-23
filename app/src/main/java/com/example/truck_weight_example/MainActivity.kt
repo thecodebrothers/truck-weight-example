@@ -3,24 +3,21 @@ package com.example.truck_weight_example
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.here.android.mpa.common.GeoCoordinate
 import com.here.android.mpa.common.OnEngineInitListener
 import com.here.android.mpa.mapping.AndroidXMapFragment
 import com.here.android.mpa.mapping.Map
-import android.widget.Toast
-import com.here.android.mpa.common.Image
 import com.here.android.mpa.mapping.MapCircle
 import com.here.android.mpa.mapping.MapRoute
-import com.here.android.mpa.routing.RoutingError
-import com.here.android.mpa.routing.RouteResult
-import com.here.android.mpa.routing.Router
-import com.here.android.mpa.routing.RouteWaypoint
-import com.here.android.mpa.mapping.MapMarker
+import com.here.android.mpa.routing.CoreRouter
 import com.here.android.mpa.routing.RouteOptions
 import com.here.android.mpa.routing.RoutePlan
-import com.here.android.mpa.routing.CoreRouter
-import com.here.android.mpa.routing.Route
+import com.here.android.mpa.routing.RouteResult
+import com.here.android.mpa.routing.RouteWaypoint
+import com.here.android.mpa.routing.Router
+import com.here.android.mpa.routing.RoutingError
 import java.util.EnumSet
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -104,7 +101,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         ).show()
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun showMarkers() {
