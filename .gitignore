@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+map_sdk_keys.gradle
+app/libs/HERE-sdk.aar
