@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
-apply from: '../map_sdk_keys.gradle'
 
 android {
     compileSdk 31
