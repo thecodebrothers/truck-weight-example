@@ -2,6 +2,7 @@ package com.example.truck_weight_example
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         mapView.init { error ->
             if (error == OnEngineInitListener.Error.NONE) {
                 map = mapView.map
-                map?.setCenter(GeoCoordinate(50.515490, 22.146612), Map.Animation.NONE)
-                map?.zoomLevel = 15.0
+                map?.setCenter(GeoCoordinate(50.231214, 18.9887583), Map.Animation.NONE)
+                map?.zoomLevel = 16.0
                 map?.fleetFeaturesVisible = EnumSet.of(Map.FleetFeature.TRUCK_RESTRICTIONS)
                 showMarkers()
             } else {
@@ -50,22 +51,38 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         findViewById<Button>(R.id.routeA).setOnClickListener {
             removeRoutes()
-            createRoute(GeoCoordinate(50.512881, 22.145569))
+            // Michałkowice -> Katowice Debowa
+            createRoute(
+                startPoint = GeoCoordinate(50.319609, 18.9952443),
+                destination = GeoCoordinate(50.2747916,18.9979625)
+            )
+            map?.setCenter(GeoCoordinate(50.274741,18.9970029), Map.Animation.NONE)
+            map?.zoomLevel = 18.0
         }
 
         findViewById<Button>(R.id.routeB).setOnClickListener {
             removeRoutes()
-            createRoute(GeoCoordinate(50.517726, 22.148927))
+            // Bielsko Biala -> Katowice
+            createRoute(
+                startPoint = GeoCoordinate(49.812179, 18.9672229),
+                destination = GeoCoordinate(50.230363, 18.9939613)
+            )
+            map?.setCenter(GeoCoordinate(50.2322981, 18.9973566), Map.Animation.NONE)
+            map?.zoomLevel = 16.0
         }
     }
 
-    private fun createRoute(destination: GeoCoordinate) {
+    private fun createRoute(destination: GeoCoordinate, startPoint: GeoCoordinate) {
         val coreRouter = CoreRouter()
         val routePlan = RoutePlan()
 
         val routeOptions = RouteOptions()
         routeOptions.transportMode = RouteOptions.TransportMode.TRUCK
         routeOptions.routeType = RouteOptions.Type.FASTEST
+        routeOptions.setFerriesAllowed(false)
+        routeOptions.setTollRoadsAllowed(false)
+        routeOptions.setHighwaysAllowed(false)
+
 
         routeOptions.truckWeightPerAxle = 6.0f
         routeOptions.truckTrailersCount = 2
@@ -75,9 +92,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         routePlan.routeOptions = routeOptions
 
-        val startPoint = RouteWaypoint(GeoCoordinate(50.515798, 22.141518))
-
-        routePlan.addWaypoint(startPoint)
+        routePlan.addWaypoint(RouteWaypoint(startPoint))
         routePlan.addWaypoint(RouteWaypoint(destination))
 
         coreRouter.calculateRoute(
@@ -91,6 +106,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 ) {
                     if (routingError == RoutingError.NONE) {
                         routeResults.forEach { route ->
+                            Log.w("weight example", "Result problems: ${route.violatedOptions}")
                             map?.addMapObject(MapRoute(route.route))
                         }
                     } else {
