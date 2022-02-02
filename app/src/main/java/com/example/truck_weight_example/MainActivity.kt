@@ -127,12 +127,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             this.lineColor = Color.parseColor("#9999EE")
             this.lineWidth = 5
         }
-        val routeAMarker = MapCircle(20.0, GeoCoordinate(50.512881, 22.145569)).apply {
+        val routeAMarker = MapCircle(20.0, GeoCoordinate(50.2747916,18.9979625)).apply {
             this.fillColor = Color.parseColor("#CC9999")
             this.lineColor = Color.parseColor("#AA6666")
             this.lineWidth = 5
         }
-        val routeBMarker = MapCircle(20.0, GeoCoordinate(50.517726, 22.148927)).apply {
+        val routeBMarker = MapCircle(20.0, GeoCoordinate(50.230363, 18.9939613)).apply {
             this.fillColor = Color.parseColor("#99CC99")
             this.lineColor = Color.parseColor("#66AA66")
             this.lineWidth = 5
